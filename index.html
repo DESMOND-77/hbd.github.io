@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Anniversaire !</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Comic+Neue:wght@700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@preline/preline@2.0.0/dist/preline.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#4ECDC4',
+                        accent: '#FFE66D',
+                    },
+                    fontFamily: {
+                        script: ['"Dancing Script"', 'cursive'],
+                        cartoon: ['"Comic Neue"', 'cursive'],
+                        elegant: ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            margin: 20px 0;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+        }
+
+        /* Styles pour la réalité augmentée */
+        .ar-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border: 3px dashed #4ECDC4;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        /* Styles pour le jeu mémoire */
+        .memory-card {
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #4ECDC4;
+            color: white;
+            font-size: 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            background: white;
+            color: #4ECDC4;
+        }
+
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .apbd {
+            position: relative;
+            z-index: 1;
+            display: none;
+        }
+    </style>
+    <style>
+        /* Animations */
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        .animate-typing {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 1s steps(40, end);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .highlight-word {
+            background: linear-gradient(120deg, #FF6B6B, #FFE66D);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+
+        @keyframes signature {
+            0% {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .signature-animation {
+            opacity: 0;
+            animation: signature 1s ease-out 2s forwards;
+        }
+
+        .message-container {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-left: 5px solid #FF6B6B;
+        }
+
+        .dark .message-container {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-left: 5px solid #FFE66D;
+        }
+    </style>
+
+    <script>
+        // Remplissage dynamique des variables
+        const urlParams = new URLSearchParams(window.location.search);
+        const nom = 'cher(e) ami(e)';
+        const qualite = 'merveilleux(se)';
+        const signature = 'Avec tout mon amour';
+
+    </script>
+</head>
+
+<body
+    class="bg-gradient-to-br from-pink-50 to-purple-100 dark:from-gray-800 dark:to-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-primary dark:text-accent">Happy Birthday!</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div id="apbd">
+        <!-- Hero Section -->
+        <section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 text-center">
+            <div class="max-w-full mx-auto">
+                <h1 class="text-5xl md:text-7xl font-bold text-primary dark:text-accent  animate-bounce">
+                    🎉 Joyeux Anniversaire ! 🎂 <br><span class="text-secondary dark:text-white"
+                        id="recipient-name">Kestia</span>
+                </h1>
+                <p class="mt-4 text-xl text-gray-600 dark:text-gray-300">
+                    Aujourd'hui, tu fêtes tes <span class="text-2xl font-bold text-primary dark:text-accent"
+                        id="age">1</span> ans de plus !
+                </p>
+                <!-- <div class="mt-8">
+                <button id="confettiBtn" class="px-6 py-3 bg-accent hover:bg-yellow-500 rounded-full font-bold text-gray-800 transition-all transform hover:scale-105">
+                    <i class="fas fa-birthday-cake mr-2"></i> Lancer les confettis !
+                </button>
+            </div> -->
+            </div>
+        </section>
+
+        <!-- Floating Balloons -->
+        <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+            <div class="balloon floating" style="left: 10%; top: 20%; animation-delay: 0s; color: #FF6B6B;"><i
+                    class="fas fa-balloon text-4xl"></i></div>
+            <div class="balloon floating" style="left: 30%; top: 30%; animation-delay: 0.5s; color: #4ECDC4;"><i
+                    class="fas fa-balloon text-5xl"></i></div>
+            <div class="balloon floating" style="left: 70%; top: 25%; animation-delay: 1s; color: #FFE66D;"><i
+                    class="fas fa-balloon text-3xl"></i></div>
+            <div class="balloon floating" style="left: 85%; top: 40%; animation-delay: 1.5s; color: #FF6B6B;"><i
+                    class="fas fa-balloon text-4xl"></i></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Left Column -->
+            <div class="md:col-span-2 space-y-8">
+                <!-- Message Section -->
+                <!-- <div class="bg-white dark:bg-gray-800 rounded-xl text-white shadow-lg p-6 transition-all hover:shadow-xl">
+                    <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Un message spécial pour toi</h2>
+                    <div class="prose dark:prose-invert max-w-none">
+                        <p class="text-lg">Chère <span id="name-in-message">${nom}</span>,</p>
+                        <p class="mt-4">En ce jour spécial, je voulais te dire à quel point tu es importante pour nous.
+                            Tu illumines nos vies de ta joie et de ta bienveillance.</p>
+                        <p class="mt-4">Que cette nouvelle année t'apporte tout le bonheur que tu mérites, des projets
+                            passionnants et des moments inoubliables avec ceux que tu aimes.</p>
+                        <p>🚨 ALERTE OFFICIELLE 🚨</p>
+                        <span>Aujourd’hui, $(nom) a le droit :</span>
+                        <ul class="ml-4 pl-6 text-gray-600 dark:text-gray-300">
+                            <li>✅ De manger du gâteau au petit-déj</li>
+                            <li>✅ D’exiger des cadeaux</li>
+                            <li>✅ D’ignorer son âge</li>
+                            <li>✅ De blâmer les bougies pour la fumée dans le salon</li>
+                            Profite bien de ton jour de gloire ! 🎂🔥
+                            (P.S. : On t’aime même si tu deviens vieille).
+                        </ul>
+
+
+                        
+                        <p class="mt-4">Avec tout mon amour,</p>
+                        <p class="font-script text-2xl mt-6">La famille</p>
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                        <button id="record-btn"
+                            class="px-4 py-2 bg-primary hover:bg-red-600 text-white rounded-full transition-all">
+                            <i class="fas fa-microphone mr-2"></i> Enregistrer un message vocal
+                        </button>
+                    </div>
+                    <div id="audio-player" class="mt-4 hidden">
+                        <audio controls class="w-full"></audio>
+                    </div>
+                </div> -->
+
+                <div
+                    class="message-container bg-white dark:bg-gray-800 text-white shadow-lg p-6 transition-all hover:shadow-xl">
+                    <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Un message spécial pour toi</h2>
+                    <div class="prose dark:prose-invert max-w-none">
+                        <!-- Ligne animée avec le nom -->
+                        <p class="text-lg animate-typing">Chère <span id="name-in-message"
+                                class="text-secondary dark:text-accent font-bold">Kestia</span>,</p>
+
+                        <!-- Message principal avec apparition séquentielle -->
+                        <div class="message-content">
+                            <p class="mt-4 fade-in" style="animation-delay: 0.3s">En ce jour vraiment spécial, nous
+                                voulions prendre le temps de te dire...</p>
+
+                            <p class="mt-4 fade-in" style="animation-delay: 0.6s">Tu es <span
+                                    class="highlight-word">exceptionnelle</span>,
+                                <span class="highlight-word">unique</span> et <span
+                                    class="highlight-word">irremplaçable</span>.
+                            </p>
+
+                            <p class="mt-4 fade-in" style="animation-delay: 0.9s">Merci d'être <span id="quality"
+                                    class="text-primary dark:text-accent font-bold">merveilleux se</span>
+                                dans nos vie.</p>
+
+                            <p class="mt-4 fade-in" style="animation-delay: 1.2s">On te souhaite une année remplie de :
+                            </p>
+                            <ul class=" pl-5 mt-2 fade-in" style="animation-delay: 1.5s">
+                                <li>Bonheurs simples</li>
+                                <li>Aventures inoubliables</li>
+                                <li>Réussites éclatantes</li>
+                                <li>Et surtout... de <span class="text-primary dark:text-accent">gros gâteaux</span> !
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Signature animée -->
+                        <p class="font-script text-3xl mt-8 text-right signature-animation" id="signature">Avec tout
+                            notre amour</p>
+
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                        <button id="record-btn"
+                            class="px-4 py-2 bg-primary hover:bg-red-600 text-white rounded-full transition-all">
+                            <i class="fas fa-microphone mr-2"></i> Enregistrer un message vocal
+                        </button>
+                    </div>
+                    <div id="audio-player" class="mt-4 hidden">
+                        <audio controls class="w-full"></audio>
+                    </div>
+                </div>
+                <!-- Photo Gallery -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Nos plus beaux souvenirs</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="photo-gallery">
+                        <!-- Photos will be added dynamically -->
+                    </div>
+                    <div class="mt-4">
+                        <button id="slideshow-btn"
+                            class="px-4 py-2 bg-secondary hover:bg-teal-500 text-white rounded-full">
+                            <i class="fas fa-play mr-2"></i> Diaporama
+                        </button>
+                    </div>
+                </div>
+
+
+
+                <!-- Augmented Reality -->
+                <!-- <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Filtre Anniversaire AR</h2>
+                <div class="ar-container">
+                    <video id="ar-video" autoplay playsinline class="w-full h-full object-cover"></video>
+                    <canvas id="ar-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+                </div>
+                <div class="mt-4 flex justify-center space-x-4">
+                    <button id="ar-crown" class="px-4 py-2 bg-accent hover:bg-yellow-500 rounded-full">
+                        <i class="fas fa-crown mr-2"></i> Couronne
+                    </button>
+                    <button id="ar-hat" class="px-4 py-2 bg-accent hover:bg-yellow-500 rounded-full">
+                        <i class="fas fa-hat-wizard mr-2"></i> Chapeau
+                    </button>
+                    <button id="ar-sunglasses" class="px-4 py-2 bg-accent hover:bg-yellow-500 rounded-full">
+                        <i class="fas fa-sun mr-2"></i> Lunettes
+                    </button>
+                </div>
+                <button id="ar-capture" class="mt-4 w-full px-4 py-2 bg-primary hover:bg-red-600 text-white rounded-full">
+                    <i class="fas fa-camera mr-2"></i> Prendre une photo
+                </button>
+            </div> -->
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-8">
+                <!-- Guest Book -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Livre d'or</h2>
+                    <div class="space-y-4" id="guest-messages">
+                        <!-- Messages will be added here -->
+                    </div>
+                    <div class="mt-6">
+                        <textarea id="guest-message-input"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 dark:border-gray-600"
+                            rows="3" placeholder="Laissez un message..."></textarea>
+                        <button id="send-message-btn"
+                            class="mt-2 px-4 py-2 bg-secondary hover:bg-teal-500 text-white rounded-full transition-all">
+                            <i class="fas fa-paper-plane mr-2"></i> Envoyer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Memory Game -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Jeu mémoire</h2>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Retrouve les paires de photos !</p>
+                    <div class="grid grid-cols-4 gap-2" id="memory-game">
+                        <!-- Cards will be added dynamically -->
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span id="memory-score" class="font-bold text-primary">Score: 0</span>
+                        <button id="memory-reset"
+                            class="px-3 py-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-full text-sm">
+                            <i class="fas fa-redo mr-1"></i> Recommencer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gift Section -->
+                <!-- <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Cadeau commun</h2>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="text-sm text-gray-500">Objectif</div>
+                            <div class="text-xl font-bold">500€</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-500">Collecté</div>
+                            <div class="text-xl font-bold text-secondary">320€</div>
+                        </div>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700">
+                        <div class="bg-secondary h-4 rounded-full" style="width: 64%"></div>
+                    </div>
+                    <button
+                        class="mt-6 w-full px-4 py-3 bg-primary hover:bg-red-600 text-white rounded-full font-bold transition-all transform hover:scale-105">
+                        <i class="fas fa-gift mr-2"></i> Participer
+                    </button>
+                </div> -->
+
+                <!-- Quiz Section -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Quiz spécial</h2>
+                    <div id="quiz-container">
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Teste tes connaissances sur la fêtée !
+                        </p>
+                        <button id="start-quiz-btn"
+                            class="w-full px-4 py-2 bg-accent hover:bg-yellow-500 text-gray-800 rounded-full font-bold">
+                            <i class="fas fa-play mr-2"></i> Commencer le quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Countdown -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6" id="countdown">
+            <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Compte à rebours</h2>
+            <div class="flex justify-center space-x-4 text-center" id="countdown">
+                <div>
+                    <div class="text-4xl font-bold text-secondary dark:text-white" id="days">00</div>
+                    <div class="text-sm text-gray-500">Jours</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-secondary dark:text-white" id="hours">00</div>
+                    <div class="text-sm text-gray-500">Heures</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-secondary dark:text-white" id="minutes">00</div>
+                    <div class="text-sm text-gray-500">Minutes</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-secondary dark:text-white" id="seconds">00</div>
+                    <div class="text-sm text-gray-500">Secondes</div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-gray-500 dark:text-gray-400">Fait avec <i class="fas fa-heart text-primary"></i> pour ton
+                    anniversaire</p>
+                <div class="mt-4 flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-accent">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-accent">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-accent">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+                <!-- QR Code -->
+                <div class="mt-6 p-3 bg-white dark:bg-gray-700 inline-block rounded-lg">
+                    <img id="qr-code"
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://exemple-anniversaire.com"
+                        alt="QR Code" class="w-24 h-24">
+                    <p class="text-xs mt-2 text-gray-500 dark:text-gray-400">Scannez pour partager</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Slideshow Modal -->
+        <div id="slideshow-modal"
+            class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center">
+            <div class="relative bg-white dark:bg-gray-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+                <button id="close-slideshow"
+                    class="absolute top-4 right-4 z-10 text-white bg-gray-800 bg-opacity-50 hover:bg-opacity-75 rounded-full p-2">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div id="slideshow-content" class="h-full w-full flex items-center justify-center">
+                    <img id="slideshow-image" src="" alt="" class="max-h-[80vh] max-w-full object-contain">
+                </div>
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+                    <button id="prev-slide" class="p-2 bg-white dark:bg-gray-700 rounded-full shadow">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="next-slide" class="p-2 bg-white dark:bg-gray-700 rounded-full shadow">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Confetti Container -->
+    <canvas id="confettiCanvas"></canvas>
+    <script>
+        // Confetti Canvas
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let isConfettiActive = false;
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Set initial theme
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Confetti Effect
+        const confettiBtn = document.getElementById('confettiBtn');
+        // Confetti System
+        class Confetti {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * canvas.height;
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 10 + 5;
+                this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                this.speed = Math.random() * 3 + 2;
+                this.angle = Math.random() * Math.PI * 2;
+                this.rotationSpeed = Math.random() * 0.2 - 0.1;
+                this.shape = Math.random() > 0.5 ? 'circle' : 'rect';
+            }
+
+            update() {
+                this.y += this.speed;
+                this.angle += this.rotationSpeed;
+                this.x += Math.sin(this.angle) * 1.5;
+
+                if (this.y > canvas.height + this.size) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = this.color;
+
+                if (this.shape === 'circle') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                }
+
+                ctx.restore();
+            }
+        }
+
+        const confettis = Array(100).fill().map(() => new Confetti());
+
+        function animateConfetti() {
+            if (!isConfettiActive) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            confettis.forEach(confetti => {
+                confetti.update();
+                confetti.draw();
+            });
+
+            requestAnimationFrame(animateConfetti);
+        }
+
+        // Photo Gallery
+        const photoGallery = document.getElementById('photo-gallery');
+        const photos = [
+            { url: './1.jpg', alt: 'Souvenir 1' },
+            { url: './2.jpg', alt: 'Souvenir 2' },
+            { url: './3.jpg', alt: 'Souvenir 3' },
+            { url: './4.jpg', alt: 'Souvenir 4' },
+            { url: './5.jpg', alt: 'Souvenir 5' },
+            { url: './6.jpg', alt: 'Souvenir 6' },];
+       
+
+        photos.forEach(photo => {
+            const imgContainer = document.createElement('div');
+            imgContainer.className = 'relative group overflow-hidden rounded-lg cursor-pointer';
+
+            const img = document.createElement('img');
+            img.src = photo.url;
+            img.alt = photo.alt;
+            img.className = 'w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110';
+
+
+            const overlay = document.createElement('div');
+            overlay.className = 'absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300';
+
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-search-plus text-white text-2xl';
+
+            overlay.appendChild(icon);
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(overlay);
+
+            imgContainer.addEventListener('click', () => {
+                openSlideshow(photos.indexOf(photo));
+            });
+
+            photoGallery.appendChild(imgContainer);
+        });
+       
+        
+        // Slideshow functionality
+        const slideshowModal = document.getElementById('slideshow-modal');
+        const slideshowImage = document.getElementById('slideshow-image');
+        const closeSlideshow = document.getElementById('close-slideshow');
+        const prevSlide = document.getElementById('prev-slide');
+        const nextSlide = document.getElementById('next-slide');
+        const slideshowBtn = document.getElementById('slideshow-btn');
+
+        let currentSlideIndex = 0;
+
+        function openSlideshow(index) {
+            currentSlideIndex = index;
+            slideshowImage.src = photos[currentSlideIndex].url;
+            slideshowImage.alt = photos[currentSlideIndex].alt;
+            slideshowModal.classList.remove('hidden');
+        }
+
+        function navigateSlide(direction) {
+            currentSlideIndex += direction;
+            if (currentSlideIndex < 0) currentSlideIndex = photos.length - 1;
+            if (currentSlideIndex >= photos.length) currentSlideIndex = 0;
+            slideshowImage.src = photos[currentSlideIndex].url;
+            slideshowImage.alt = photos[currentSlideIndex].alt;
+        }
+
+        closeSlideshow.addEventListener('click', () => {
+            slideshowModal.classList.add('hidden');
+        });
+
+        prevSlide.addEventListener('click', () => navigateSlide(-1));
+        nextSlide.addEventListener('click', () => navigateSlide(1));
+
+        slideshowBtn.addEventListener('click', () => openSlideshow(0));
+
+        // Guest Book functionality
+        const guestMessages = document.getElementById('guest-messages');
+        const messageInput = document.getElementById('guest-message-input');
+        const sendMessageBtn = document.getElementById('send-message-btn');
+
+        sendMessageBtn.addEventListener('click', () => {
+            if (messageInput.value.trim() === '') return;
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'bg-gray-100 dark:bg-gray-700 p-4 rounded-lg';
+
+            const messageText = document.createElement('p');
+            messageText.className = 'text-gray-800 dark:text-gray-200';
+            messageText.textContent = messageInput.value;
+
+            const messageMeta = document.createElement('div');
+            messageMeta.className = 'flex justify-between items-center mt-2 text-sm text-gray-500 dark:text-gray-400';
+
+            const messageAuthor = document.createElement('span');
+            messageAuthor.textContent = 'Anonyme';
+
+            const messageTime = document.createElement('span');
+            messageTime.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            messageMeta.appendChild(messageAuthor);
+            messageMeta.appendChild(messageTime);
+            messageDiv.appendChild(messageText);
+            messageDiv.appendChild(messageMeta);
+
+            guestMessages.appendChild(messageDiv);
+            messageInput.value = '';
+
+            // Scroll to the new message
+            messageDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Memory Game
+        const memoryGame = document.getElementById('memory-game');
+        const memoryScore = document.getElementById('memory-score');
+        const memoryReset = document.getElementById('memory-reset');
+
+        const memoryCards = [
+            { emoji: '🎂', matched: false },
+            { emoji: '🎁', matched: false },
+            { emoji: '🎉', matched: false },
+            { emoji: '🥳', matched: false },
+            { emoji: '❤️', matched: false },
+            { emoji: '🎈', matched: false }
+        ];
+
+        // Duplicate cards to make pairs
+        let gameCards = [...memoryCards, ...memoryCards];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let score = 0;
+
+        function initMemoryGame() {
+            memoryGame.innerHTML = '';
+            flippedCards = [];
+            matchedPairs = 0;
+            score = 0;
+            memoryScore.textContent = `Score: ${score}`;
+
+            // Shuffle cards
+            gameCards = [...memoryCards, ...memoryCards].sort(() => Math.random() - 0.5);
+
+            // Create card elements
+            gameCards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'memory-card';
+                cardElement.dataset.index = index;
+                cardElement.innerHTML = '<div class="emoji hidden">' + card.emoji + '</div>';
+
+                cardElement.addEventListener('click', flipCard);
+                memoryGame.appendChild(cardElement);
+            });
+        }
+
+        function flipCard() {
+            const cardIndex = this.dataset.index;
+            const card = gameCards[cardIndex];
+
+            // Don't allow flipping if already matched or already flipped
+            if (card.matched || flippedCards.includes(cardIndex) || flippedCards.length >= 2) return;
+
+            this.classList.add('flipped');
+            this.querySelector('.emoji').classList.remove('hidden');
+
+            flippedCards.push(cardIndex);
+
+            if (flippedCards.length === 2) {
+                checkForMatch();
+            }
+        }
+
+        function checkForMatch() {
+            const [firstIndex, secondIndex] = flippedCards;
+            const firstCard = gameCards[firstIndex];
+            const secondCard = gameCards[secondIndex];
+
+            if (firstCard.emoji === secondCard.emoji) {
+                // Match found
+                firstCard.matched = true;
+                secondCard.matched = true;
+                matchedPairs++;
+                score += 10;
+                memoryScore.textContent = `Score: ${score}`;
+
+                // Add celebration effect
+                if (matchedPairs === memoryCards.length) {
+                    setTimeout(() => {
+                        alert('Félicitations ! Vous avez trouvé toutes les paires !');
+                        createConfetti();
+                    }, 500);
+                }
+
+                flippedCards = [];
+            } else {
+                // No match
+                score = Math.max(0, score - 2);
+                memoryScore.textContent = `Score: ${score}`;
+
+                setTimeout(() => {
+                    document.querySelector(`.memory-card[data-index="${firstIndex}"]`).classList.remove('flipped');
+                    document.querySelector(`.memory-card[data-index="${firstIndex}"] .emoji`).classList.add('hidden');
+                    document.querySelector(`.memory-card[data-index="${secondIndex}"]`).classList.remove('flipped');
+                    document.querySelector(`.memory-card[data-index="${secondIndex}"] .emoji`).classList.add('hidden');
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        memoryReset.addEventListener('click', initMemoryGame);
+        initMemoryGame();
+
+        // Countdown Timer
+
+        let anim = false
+        function updateCountdown() {
+            // Set the birthday date (next occurrence)
+            const now = new Date();
+            // let birthday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2); // Example: tomorrow
+
+            let birthday = new Date(2025, 4, 10);
+
+            const mask = document.getElementById('apbd')
+            const cnd = document.getElementById('countdown');
+            mask.style.display = 'none';
+            cnd.style.display = 'block';
+
+            // If birthday already passed this year, set for next year
+            if (now > birthday) {
+                anim = true
+                let nbirthday = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate() + 1);
+                mask.style.display = 'block';
+                cnd.style.display = 'none';
+            }
+
+            const diff = birthday - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        if (anim == true) {
+            isConfettiActive = !isConfettiActive;
+            animateConfetti();
+            // Play sound
+            const audio = new Audio('./happy-birthday-334876.mp3');
+            audio.play().catch(e => console.log("Audio playback failed:", e));
+        }
+
+        // Audio Recording
+        const recordBtn = document.getElementById('record-btn');
+        const audioPlayer = document.getElementById('audio-player');
+        const audioElement = audioPlayer.querySelector('audio');
+
+        let mediaRecorder;
+        let audioChunks = [];
+
+        recordBtn.addEventListener('click', async () => {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                // Stop recording
+                mediaRecorder.stop();
+                recordBtn.innerHTML = '<i class="fas fa-microphone mr-2"></i> Enregistrer un message vocal';
+                recordBtn.classList.remove('bg-red-600');
+                recordBtn.classList.add('bg-primary');
+            } else {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        audioElement.src = audioUrl;
+                        audioPlayer.classList.remove('hidden');
+                        audioChunks = [];
+                    };
+
+                    mediaRecorder.start();
+                    recordBtn.innerHTML = '<i class="fas fa-stop mr-2"></i> Arrêter l\'enregistrement';
+                    recordBtn.classList.remove('bg-primary');
+                    recordBtn.classList.add('bg-red-600');
+                } catch (error) {
+                    console.error('Error accessing microphone:', error);
+                    alert('Impossible d\'accéder au microphone. Veuillez vérifier les permissions.');
+                }
+            }
+        });
+
+        // AR Filter (simplified - would need more complex implementation with face tracking)
+        const arVideo = document.getElementById('ar-video');
+        const arCanvas = document.getElementById('ar-canvas');
+        const arCrown = document.getElementById('ar-crown');
+        const arHat = document.getElementById('ar-hat');
+        const arSunglasses = document.getElementById('ar-sunglasses');
+        const arCapture = document.getElementById('ar-capture');
+
+        let currentFilter = null;
+
+        // // Start camera
+        // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        //     navigator.mediaDevices.getUserMedia({ video: true })
+        //         .then(stream => {
+        //             arVideo.srcObject = stream;
+        //         })
+        //         .catch(error => {
+        //             console.error('Error accessing camera:', error);
+        //             arVideo.style.display = 'none';
+        //             arCanvas.style.background = '#4ECDC4';
+        //             arCanvas.style.display = 'flex';
+        //             arCanvas.style.alignItems = 'center';
+        //             arCanvas.style.justifyContent = 'center';
+        //             arCanvas.innerHTML = '<p class="text-white">Camera non disponible</p>';
+        //         });
+        // }
+
+        // // Filter selection
+        // arCrown.addEventListener('click', () => {
+        //     currentFilter = 'crown';
+        //     updateFilter();
+        // });
+
+        // arHat.addEventListener('click', () => {
+        //     currentFilter = 'hat';
+        //     updateFilter();
+        // });
+
+        // arSunglasses.addEventListener('click', () => {
+        //     currentFilter = 'sunglasses';
+        //     updateFilter();
+        // });
+
+        // function updateFilter() {
+        //     // In a real implementation, this would use face tracking
+        //     // For demo, we'll just show an emoji
+        //     arCanvas.innerHTML = currentFilter ?
+        //         `<div class="text-6xl">${getFilterEmoji(currentFilter)}</div>` :
+        //         '';
+        // }
+
+        // function getFilterEmoji(filter) {
+        //     switch (filter) {
+        //         case 'crown': return '👑';
+        //         case 'hat': return '🎩';
+        //         case 'sunglasses': return '😎';
+        //         default: return '';
+        //     }
+        // }
+
+        // // Capture photo
+        // arCapture.addEventListener('click', () => {
+        //     if (!currentFilter) {
+        //         alert('Sélectionnez un filtre avant de prendre une photo');
+        //         return;
+        //     }
+
+        //     // In a real app, we would capture the canvas with the filter overlay
+        //     // For demo, we'll just show an alert
+        //     alert('Photo capturée avec le filtre ' + currentFilter + ' !');
+        // });
+
+        // Quiz Section
+
+        const quizContainer = document.getElementById('quiz-container');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+
+        const quizQuestions = [
+            {
+                question: "Quelle est la date de naissance de la fêtée ?",
+                options: ["15 juin", "11 mai", "12 septembre", "3 novembre"],
+                answer: 1
+            },
+            {
+                question: "Quel est son plat préféré ?",
+                options: ["Pizza", "Sushi", "Pâtes carbonara", "Burger"],
+                answer: 0
+            },
+            {
+                question: "Quelle est sa couleur préférée ?",
+                options: ["Bleu", "Rouge", "Vert", "Rose"],
+                answer: 3
+            }
+        ];
+
+        let currentQuestion = 0;
+        let quizScore = 0;
+
+        startQuizBtn.addEventListener('click', startQuiz);
+
+        function startQuiz() {
+            quizScore = 0;
+            currentQuestion = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= quizQuestions.length) {
+                showQuizResult();
+                return;
+            }
+
+            const question = quizQuestions[currentQuestion];
+
+            quizContainer.innerHTML = `
+                <div class="quiz-question">
+                    <h3 class="text-lg font-bold text-primary dark:text-accent mb-4">${question.question}</h3>
+                    <div class="space-y-3" id="quiz-options">
+                        ${question.options.map((option, index) => `
+                            <button class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-left quiz-option" data-index="${index}">
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                        Question ${currentQuestion + 1} sur ${quizQuestions.length}
+                    </div>
+                </div>
+            `;
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const selectedIndex = parseInt(option.dataset.index);
+                    if (selectedIndex === question.answer) {
+                        quizScore++;
+                        option.classList.add('bg-green-100', 'dark:bg-green-900');
+                    } else {
+                        option.classList.add('bg-red-100', 'dark:bg-red-900');
+                        // Highlight correct answer
+                        document.querySelector(`.quiz-option[data-index="${question.answer}"]`)
+                            .classList.add('bg-green-100', 'dark:bg-green-900');
+                    }
+
+                    // Disable all options after selection
+                    document.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.disabled = true;
+                    });
+
+                    setTimeout(() => {
+                        currentQuestion++;
+                        showQuestion();
+                    }, 1500);
+                });
+            });
+        }
+
+        function showQuizResult() {
+            const percentage = Math.round((quizScore / quizQuestions.length) * 100);
+            let message;
+
+            if (percentage >= 80) {
+                message = "Expert ! Vous connaissez parfaitement lla fêtée !";
+            } else if (percentage >= 50) {
+                message = "Pas mal ! Vous connaissez bien la fêtée.";
+            } else {
+                message = "À améliorer... Vous devriez passer plus de temps avec la fêtée !";
+            }
+
+            quizContainer.innerHTML = `
+                <div class="quiz-result text-center">
+                    <h3 class="text-xl font-bold text-primary dark:text-accent mb-2">Résultat du quiz</h3>
+                    <div class="text-4xl font-bold mb-4">${percentage}%</div>
+                    <div class="mb-6">${message}</div>
+                    <button id="restart-quiz" class="px-4 py-2 bg-primary hover:bg-red-600 text-white rounded-full">
+                        <i class="fas fa-redo mr-2"></i> Recommencer
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('restart-quiz').addEventListener('click', startQuiz);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+
+</html>
