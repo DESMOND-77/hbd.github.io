@@ -225,11 +225,7 @@
                     Aujourd'hui, tu fêtes tes <span class="text-2xl font-bold text-primary dark:text-accent"
                         id="age">1</span> ans de plus !
                 </p>
-                <!-- <div class="mt-8">
-                <button id="confettiBtn" class="px-6 py-3 bg-accent hover:bg-yellow-500 rounded-full font-bold text-gray-800 transition-all transform hover:scale-105">
-                    <i class="fas fa-birthday-cake mr-2"></i> Lancer les confettis !
-                </button>
-            </div> -->
+               
             </div>
         </section>
 
@@ -249,7 +245,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Left Column -->
             <div class="md:col-span-2 space-y-8">
-                            <div
+              
+                <div
                     class="message-container bg-white dark:bg-gray-800 text-white shadow-lg p-6 transition-all hover:shadow-xl">
                     <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Un message spécial pour toi</h2>
                     <div class="prose dark:prose-invert max-w-none">
@@ -312,6 +309,8 @@
                     </div>
                 </div>
 
+
+
             </div>
 
             <!-- Right Column -->
@@ -349,7 +348,7 @@
                     </div>
                 </div>
 
-                <!-- Quiz Section -->
+                    <!-- Quiz Section -->
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                     <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Quiz spécial</h2>
                     <div id="quiz-container">
@@ -363,78 +362,77 @@
                 </div>
             </div>
         </div>
+    </div>
 
-
-        <!-- Countdown -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6" id="countdown">
-            <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Compte à rebours</h2>
-            <div class="flex justify-center space-x-4 text-center" id="countdown">
-                <div>
-                    <div class="text-4xl font-bold text-secondary dark:text-white" id="days">00</div>
-                    <div class="text-sm text-gray-500">Jours</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-secondary dark:text-white" id="hours">00</div>
-                    <div class="text-sm text-gray-500">Heures</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-secondary dark:text-white" id="minutes">00</div>
-                    <div class="text-sm text-gray-500">Minutes</div>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-secondary dark:text-white" id="seconds">00</div>
-                    <div class="text-sm text-gray-500">Secondes</div>
-                </div>
+    <!-- Countdown -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6" id="countdown">
+        <h2 class="text-2xl font-bold text-primary dark:text-accent mb-4">Compte à rebours</h2>
+        <div class="flex justify-center space-x-4 text-center" id="countdown">
+            <div>
+                <div class="text-4xl font-bold text-secondary dark:text-white" id="days">00</div>
+                <div class="text-sm text-gray-500">Jours</div>
             </div>
-        </div>
-        <!-- Footer -->
-        <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <p class="text-gray-500 dark:text-gray-400">Fait avec <i class="fas fa-heart text-primary"></i> pour ton
-                    anniversaire</p>
-                <div class="mt-4 flex justify-center space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-accent">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-accent">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-accent">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </div>
-                <!-- QR Code -->
-                <div class="mt-6 p-3 bg-white dark:bg-gray-700 inline-block rounded-lg">
-                    <img id="qr-code"
-                        src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://desmond-77.github.io/hbd.github.io/"
-                        alt="QR Code" class="w-24 h-24">
-                    <p class="text-xs mt-2 text-gray-500 dark:text-gray-400">Scannez pour partager</p>
-                </div>
+            <div>
+                <div class="text-4xl font-bold text-secondary dark:text-white" id="hours">00</div>
+                <div class="text-sm text-gray-500">Heures</div>
             </div>
-        </footer>
-
-        <!-- Slideshow Modal -->
-        <div id="slideshow-modal"
-            class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center">
-            <div class="relative bg-white dark:bg-gray-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-                <button id="close-slideshow"
-                    class="absolute top-4 right-4 z-10 text-white bg-gray-800 bg-opacity-50 hover:bg-opacity-75 rounded-full p-2">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div id="slideshow-content" class="h-full w-full flex items-center justify-center">
-                    <img id="slideshow-image" src="" alt="" class="max-h-[80vh] max-w-full object-contain">
-                </div>
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
-                    <button id="prev-slide" class="p-2 bg-white dark:bg-gray-700 rounded-full shadow">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button id="next-slide" class="p-2 bg-white dark:bg-gray-700 rounded-full shadow">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
+            <div>
+                <div class="text-4xl font-bold text-secondary dark:text-white" id="minutes">00</div>
+                <div class="text-sm text-gray-500">Minutes</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-secondary dark:text-white" id="seconds">00</div>
+                <div class="text-sm text-gray-500">Secondes</div>
             </div>
         </div>
     </div>
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500 dark:text-gray-400">Fait avec <i class="fas fa-heart text-primary"></i> pour ton
+                anniversaire</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-accent">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-accent">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-accent">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            <!-- QR Code -->
+            <div class="mt-6 p-3 bg-white dark:bg-gray-700 inline-block rounded-lg">
+                <img id="qr-code"
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://desmond-77.github.io/hbd.github.io/"
+                    alt="QR Code" class="w-24 h-24">
+                <p class="text-xs mt-2 text-gray-500 dark:text-gray-400">Scannez pour partager</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Slideshow Modal -->
+    <div id="slideshow-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center">
+        <div class="relative bg-white dark:bg-gray-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <button id="close-slideshow"
+                class="absolute top-4 right-4 z-10 text-white bg-gray-800 bg-opacity-50 hover:bg-opacity-75 rounded-full p-2">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="slideshow-content" class="h-full w-full flex items-center justify-center">
+                <img id="slideshow-image" src="" alt="" class="max-h-[80vh] max-w-full object-contain">
+            </div>
+            <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+                <button id="prev-slide" class="p-2 bg-white dark:bg-gray-700 rounded-full shadow">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="next-slide" class="p-2 bg-white dark:bg-gray-700 rounded-full shadow">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Confetti Container -->
     <canvas id="confettiCanvas"></canvas>
     <script>
@@ -529,7 +527,7 @@
             { url: './4.jpg', alt: 'Souvenir 4' },
             { url: './5.jpg', alt: 'Souvenir 5' },
             { url: './6.jpg', alt: 'Souvenir 6' },];
-       
+
 
         photos.forEach(photo => {
             const imgContainer = document.createElement('div');
@@ -557,8 +555,8 @@
 
             photoGallery.appendChild(imgContainer);
         });
-       
-        
+
+
         // Slideshow functionality
         const slideshowModal = document.getElementById('slideshow-modal');
         const slideshowImage = document.getElementById('slideshow-image');
@@ -734,7 +732,8 @@
         function updateCountdown() {
             // Set the birthday date (next occurrence)
             const now = new Date();
-            
+            // let birthday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2); // Example: tomorrow
+
             let birthday = new Date(2025, 4, 11);
 
             const mask = document.getElementById('apbd')
@@ -826,7 +825,7 @@
 
         let currentFilter = null;
 
-      
+
 
         // Quiz Section
 
